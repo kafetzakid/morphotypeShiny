@@ -20,8 +20,8 @@ library(DT)
 logowd = "The_logos_path"
 readwd = "The_data_path"
 
-source("~/R/get_data.R")
-source("~/R/ui.R")
-source("~/R/server.R")
+source("../R/get_data.R")
+source("../R/ui.R")
+source("../R/server.R")
 
 shinyApp(ui = ui, server = server)

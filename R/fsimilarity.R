@@ -1,4 +1,6 @@
+library(shiny)
 library(highcharter)
+library(ggplot2)
 
 # read distance matrix
 distM = read.csv(paste0(readwd, "distM_Eucl_FG_EFA_20231211.csv"), row.names = 1)
@@ -13,6 +15,12 @@ data_df = read.csv(paste0(readwd, "df_pointMeasures_realD_FG_20230209.csv"))
 seqID = order(data_df$FG_Final)
 distM = distM[seqID, seqID]
 mat_circumference_scaled = mat_circumference_scaled[seqID]
+
+# filter data according to FG
+selectFG = "A"
+keepidx = which(data_df$FG_Final == selectFG)
+distM = distM[keepidx, keepidx]
+mat_circumference_scaled = mat_circumference_scaled[keepidx]
 rm(data_df)
 
 # process matrix data
@@ -34,8 +42,9 @@ ui = fluidPage(
   titlePanel("Interactive distance matrix to inspect form similarity")
   
   , fluidRow(column(8
-                    , highchartOutput('distM_plot', height = "1600px", width = "1600px")
+                    , highchartOutput('distM_plot', height = "1000px", width = "1000px")
   ), column(2, 
+            br(), br(), br(), br(), br(), br(), br(), br(), br(), br(), br(), br(),
             plotOutput("plotRow", height = "200px"), br(),
             plotOutput("plotCol", height = "200px"), br(),
             plotOutput("plotBoth", height = "200px"))
